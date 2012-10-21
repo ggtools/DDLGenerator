@@ -17,13 +17,10 @@ package net.ggtools.maven.ddlgenerator;
 import static org.testng.Assert.assertEquals;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.maven.plugin.logging.Log;
-import org.hibernate.dialect.Oracle10gDialect;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -32,15 +29,11 @@ import org.testng.annotations.Test;
 /**
  * User: Christophe Labouisse Date: 10/19/12 Time: 07:53
  */
-public class DDLGeneratorTest {
+public class DDLGeneratorTest extends AbstractTestWithConfig {
 	private DDLGenerator generator;
 
 	@Mock
 	private Log log;
-
-	private final Map<String, Object> referenceConfigProperties = new HashMap<String, Object>();
-
-	private final String dialect = Oracle10gDialect.class.getCanonicalName();
 
 	@Test
 	public void initIsOk() throws Exception {
@@ -65,13 +58,7 @@ public class DDLGeneratorTest {
 
 	@BeforeMethod
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
 		generator = new DDLGenerator(log);
-		referenceConfigProperties.put("hibernate.hbm2ddl.auto", "create");
-		referenceConfigProperties.put("hibernate.use_sql_comments", false);
-		referenceConfigProperties.put("hibernate.format_sql", false);
-		referenceConfigProperties.put("hibernate.show_sq", false);
-		referenceConfigProperties.put("hibernate.dialect", dialect);
 	}
 
 	@AfterMethod

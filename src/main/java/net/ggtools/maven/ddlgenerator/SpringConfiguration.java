@@ -14,11 +14,17 @@
 
 package net.ggtools.maven.ddlgenerator;
 
+import java.io.File;
+
+import javax.sql.DataSource;
+
 import org.apache.maven.plugin.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager;
 
 /**
  * User: Christophe Labouisse Date: 10/18/12 Time: 18:12
@@ -26,14 +32,38 @@ import org.springframework.core.env.Environment;
 @Configuration
 public class SpringConfiguration {
 
+	public final static String ENV_PREFIX = "jpahbn2ddl";
+
 	@Autowired
 	Environment env;
 
 	@Bean
-	DDLGenerator ddlGenerator() {
-		final Log log = env.getProperty("log", Log.class);
+	public DataSource dataSource() {
+		return new SimpleDriverDataSource();
+	}
+
+	@Bean
+	public DDLGenerator ddlGenerator() {
+		final Log log = env.getProperty(ENV_PREFIX + ".log", Log.class);
 		final DDLGenerator generator = new DDLGenerator(log);
-		// TODO set properties
+		generator.setDdlFile(env.getProperty(ENV_PREFIX + ".ddlFile", File.class));
+		generator.setDefaultSchema(env.getProperty(ENV_PREFIX + ".defaultSchema", String.class));
+		generator.setDialect(env.getProperty(ENV_PREFIX + ".dialect", String.class));
+		generator.setNamingStrategy(env.getProperty(ENV_PREFIX + ".namingStrategy", String.class));
+		generator.setPersistenceUnitName(env.getProperty(ENV_PREFIX + ".persistenceUnitName", String.class));
+		generator.setUseNewGenerator(env.getProperty(ENV_PREFIX + ".useNewGenerator", Boolean.class));
 		return generator;
+	}
+
+	@Bean
+	public DefaultPersistenceUnitManager persistenceUnitManager() {
+		MultiConfigAwarePersistenceUnitManager puManager = new MultiConfigAwarePersistenceUnitManager();
+		puManager.setDefaultDataSource(dataSource());
+		puManager.setPersistenceUnitName(env.getProperty(ENV_PREFIX + ".persistenceUnitName", String.class));
+		String[] xmlLocations = env.getProperty(ENV_PREFIX + ".persistenceXmlLocations", String[].class);
+		if (xmlLocations != null) {
+			puManager.setPersistenceXmlLocations(xmlLocations);
+		}
+		return puManager;
 	}
 }

@@ -40,22 +40,22 @@ import org.springframework.util.ReflectionUtils;
 @SuppressWarnings("deprecation")
 @Setter
 public class DDLGenerator {
+	private final Log log;
 
+	// Getter for test purpose only.
 	@Getter(AccessLevel.PACKAGE)
-	// For test
 	private final Map<String, Object> configProperties = new HashMap<String, Object>();
 
 	private File ddlFile;
-
 	private String defaultSchema;
 	private String dialect;
-	private final Log log;
 	private String namingStrategy;
 	private String persistenceUnitName;
+	private Boolean useNewGenerator;
+
 	@Autowired
 	private DefaultPersistenceUnitManager puManager;
 
-	private Boolean useNewGenerator;
 
 	public DDLGenerator(final Log log) {
 		this.log = log;
@@ -75,7 +75,7 @@ public class DDLGenerator {
 		final Field field = ReflectionUtils.findField(Ejb3Configuration.class, "cfg");
 		ReflectionUtils.makeAccessible(field);
 		final ServiceRegistry registry = new ServiceRegistryBuilder().applySettings(configProperties)
-		        .buildServiceRegistry();
+				.buildServiceRegistry();
 		final Configuration configuration = (Configuration) ReflectionUtils.getField(field, ejb3Config);
 		final SchemaExport export = new SchemaExport(registry, configuration);
 		export.setDelimiter(";"); // TODO introduce parameter
