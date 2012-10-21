@@ -33,41 +33,49 @@ import org.testng.annotations.Test;
  * User: Christophe Labouisse Date: 10/19/12 Time: 07:53
  */
 public class DDLGeneratorTest {
-    private DDLGenerator generator;
+	private DDLGenerator generator;
 
-    @Mock
-    private Log log;
+	@Mock
+	private Log log;
 
-    private final Map<String, Object> referenceConfigProperties = new HashMap<String, Object>();
+	private final Map<String, Object> referenceConfigProperties = new HashMap<String, Object>();
 
-    @Test
-    public void initIsOk() throws Exception {
-        String dialect = Oracle10gDialect.class.getCanonicalName();
-        referenceConfigProperties.put("hibernate.dialect", dialect);
-        generator.setDdlFile(new File("test.sql"));
-        generator.setDialect(dialect);
-        generator.init();
-        Map<String,Object> configProperties = generator.getConfigProperties();
-        assertEquals(configProperties, referenceConfigProperties);
-    }
+	private final String dialect = Oracle10gDialect.class.getCanonicalName();
 
-    @Test(expectedExceptions = BeanInitializationException.class)
-    public void initMissingArg() throws Exception {
-        generator.init();
-    }
+	@Test
+	public void initIsOk() throws Exception {
+		generator.setDdlFile(new File("test.sql"));
+		generator.setDialect(dialect);
+		generator.init();
+		final Map<String, Object> configProperties = generator.getConfigProperties();
+		assertEquals(configProperties, referenceConfigProperties);
+	}
 
-    @BeforeMethod
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        generator = new DDLGenerator(log);
-        referenceConfigProperties.put("hibernate.hbm2ddl.auto", "create");
-        referenceConfigProperties.put("hibernate.use_sql_comments", false);
-        referenceConfigProperties.put("hibernate.format_sql", false);
-        referenceConfigProperties.put("hibernate.show_sq", false);
-    }
+	@Test(expectedExceptions = BeanInitializationException.class)
+	public void initMissingDDLFile() throws Exception {
+		generator.setDialect(dialect);
+		generator.init();
+	}
 
-    @AfterMethod
-    public void tearDown() throws Exception {
+	@Test(expectedExceptions = BeanInitializationException.class)
+	public void initMissingDialect() throws Exception {
+		generator.setDdlFile(new File("test.sql"));
+		generator.init();
+	}
 
-    }
+	@BeforeMethod
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		generator = new DDLGenerator(log);
+		referenceConfigProperties.put("hibernate.hbm2ddl.auto", "create");
+		referenceConfigProperties.put("hibernate.use_sql_comments", false);
+		referenceConfigProperties.put("hibernate.format_sql", false);
+		referenceConfigProperties.put("hibernate.show_sq", false);
+		referenceConfigProperties.put("hibernate.dialect", dialect);
+	}
+
+	@AfterMethod
+	public void tearDown() throws Exception {
+
+	}
 }
