@@ -21,21 +21,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 /**
- * User: Christophe Labouisse
- * Date: 10/18/12
- * Time: 18:12
+ * User: Christophe Labouisse Date: 10/18/12 Time: 18:12
  */
 @Configuration
 public class SpringConfiguration {
 
-    @Autowired
-    Environment env;
+	@Autowired
+	Environment env;
 
-    @Bean
-    DDLGenerator ddlGenerator() {
-        Log log = env.getProperty("log", Log.class);
-        DDLGenerator generator = new DDLGenerator(log);
-        // TODO set properties
-        return generator;
-    }
+	@Bean
+	DDLGenerator ddlGenerator() {
+		final Log log = env.getProperty("log", Log.class);
+		final DDLGenerator generator = new DDLGenerator(log);
+		// TODO set properties
+		return generator;
+	}
 }

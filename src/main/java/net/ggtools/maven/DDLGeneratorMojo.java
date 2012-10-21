@@ -30,8 +30,13 @@ package net.ggtools.maven;
  * limitations under the License.
  */
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.ggtools.maven.ddlgenerator.DDLGenerator;
 import net.ggtools.maven.ddlgenerator.SpringConfiguration;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -39,81 +44,75 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * Goal which touches a timestamp file.
- * 
- *
+ * Goal which touches a timestamp file. 
+ * 
  * @goal touch
  * @phase process-sources
  */
 public class DDLGeneratorMojo extends AbstractMojo {
 
-    /**
-     * Destination file
-     *
-     * @parameter
-     * @required
-     */
-    private File ddlFile;
+	/**
+	 * Destination file
+	 * 
+	 * @parameter
+	 * @required
+	 */
+	private File ddlFile;
 
-    /**
-     * Default schema
-     *
-     * @parameter
-     */
-    private String defaultSchema;
+	/**
+	 * Default schema
+	 * 
+	 * @parameter
+	 */
+	private String defaultSchema;
 
-    /**
-     * Database dialect.
-     *
-     * @parameter
-     * @required
-     */
-    private String dialect;
+	/**
+	 * Database dialect.
+	 * 
+	 * @parameter
+	 * @required
+	 */
+	private String dialect;
 
-    /**
-     * Naming strategy.
-     *
-     * @parameter
-     */
-    private String namingStrategy;
+	/**
+	 * Naming strategy.
+	 * 
+	 * @parameter
+	 */
+	private String namingStrategy;
 
-    /**
-     * Name of the persistence unit used for the DDL generation.
-     *
-     * @parameter
-     * @required
-     */
-    private String persistenceUnitName;
+	/**
+	 * Name of the persistence unit used for the DDL generation.
+	 * 
+	 * @parameter
+	 * @required
+	 */
+	private String persistenceUnitName;
 
-    /**
-     * Whether or not use the new generator mapping in hibernate
-     *
-     * @parameter default-value=false
-     */
-    private Boolean useNewGenerator;
+	/**
+	 * Whether or not use the new generator mapping in hibernate
+	 * 
+	 * @parameter default-value=false
+	 */
+	private Boolean useNewGenerator;
 
+	private MapPropertySource createPropertySource() {
+		final Map<String, Object> properties = new HashMap<String, Object>();
+		// TODO create properties from parameters
+		return new MapPropertySource("mojoPropertySource", properties);
+	}
 
-    private MapPropertySource createPropertySource() {
-        Map<String, Object> properties = new HashMap<String, Object>();
-        // TODO create properties from parameters
-        return new MapPropertySource("mojoPropertySource", properties);
-    }
-
-    public void execute() throws MojoExecutionException {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-        ConfigurableEnvironment environment = applicationContext.getEnvironment();
-        MutablePropertySources propertySources = environment.getPropertySources();
-        MapPropertySource propertySource = createPropertySource();
-        propertySources.addFirst(propertySource);
-        applicationContext.register(SpringConfiguration.class);
-        applicationContext.refresh();
-        DDLGenerator generator = applicationContext.getBean(DDLGenerator.class);
-    }
-
+	@Override
+	public void execute() throws MojoExecutionException {
+		final AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+		final ConfigurableEnvironment environment = applicationContext.getEnvironment();
+		final MutablePropertySources propertySources = environment.getPropertySources();
+		final MapPropertySource propertySource = createPropertySource();
+		propertySources.addFirst(propertySource);
+		applicationContext.register(SpringConfiguration.class);
+		applicationContext.refresh();
+		final DDLGenerator generator = applicationContext.getBean(DDLGenerator.class);
+	}
 
 }

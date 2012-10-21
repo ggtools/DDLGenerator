@@ -14,26 +14,23 @@
 
 package net.ggtools.maven.ddlgenerator;
 
+import static org.testng.Assert.assertEquals;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.maven.plugin.logging.Log;
 import org.hibernate.dialect.Oracle10gDialect;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.testng.Assert.*;
-
 /**
- * User: Christophe Labouisse
- * Date: 10/19/12
- * Time: 07:53
+ * User: Christophe Labouisse Date: 10/19/12 Time: 07:53
  */
 public class DDLGeneratorTest {
     private DDLGenerator generator;
