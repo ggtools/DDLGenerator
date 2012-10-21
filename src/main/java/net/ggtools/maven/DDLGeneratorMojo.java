@@ -30,10 +30,15 @@ package net.ggtools.maven;
  * limitations under the License.
  */
 
+import static net.ggtools.maven.ddlgenerator.SpringConfiguration.ENV_PREFIX;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import net.ggtools.maven.ddlgenerator.DDLGenerator;
 import net.ggtools.maven.ddlgenerator.SpringConfiguration;
 
@@ -50,6 +55,9 @@ import org.springframework.core.env.MutablePropertySources;
  * @goal touch
  * @phase process-sources
  */
+@SuppressWarnings("unused")
+@Setter(AccessLevel.PACKAGE)
+@Getter(AccessLevel.PACKAGE)
 public class DDLGeneratorMojo extends AbstractMojo {
 
 	/**
@@ -91,15 +99,28 @@ public class DDLGeneratorMojo extends AbstractMojo {
 	private String persistenceUnitName;
 
 	/**
+	 * Locations of the persistence.xml files.
+	 * 
+	 * @parameter
+	 */
+	private String[] persistenceXmlLocations;
+
+	/**
 	 * Whether or not use the new generator mapping in hibernate
 	 * 
 	 * @parameter default-value=false
 	 */
 	private Boolean useNewGenerator;
 
-	private MapPropertySource createPropertySource() {
+	MapPropertySource createPropertySource() {
 		final Map<String, Object> properties = new HashMap<String, Object>();
-		// TODO create properties from parameters
+		properties.put(ENV_PREFIX + ".ddlFile", ddlFile);
+		properties.put(ENV_PREFIX + ".defaultSchema", defaultSchema);
+		properties.put(ENV_PREFIX + ".dialect", dialect);
+		properties.put(ENV_PREFIX + ".namingStrategy", namingStrategy);
+		properties.put(ENV_PREFIX + ".persistenceUnitName", persistenceUnitName);
+		properties.put(ENV_PREFIX + ".useNewGenerator", useNewGenerator);
+		properties.put(ENV_PREFIX + ".persistenceXmlLocations", persistenceXmlLocations);
 		return new MapPropertySource("mojoPropertySource", properties);
 	}
 
