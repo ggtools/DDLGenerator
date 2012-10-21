@@ -112,6 +112,17 @@ public class DDLGeneratorMojo extends AbstractMojo {
 	 */
 	private Boolean useNewGenerator;
 
+	AnnotationConfigApplicationContext createApplicationContext() {
+		final AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+		final ConfigurableEnvironment environment = applicationContext.getEnvironment();
+		final MutablePropertySources propertySources = environment.getPropertySources();
+		final MapPropertySource propertySource = createPropertySource();
+		propertySources.addFirst(propertySource);
+		applicationContext.register(SpringConfiguration.class);
+		applicationContext.refresh();
+		return applicationContext;
+	}
+
 	MapPropertySource createPropertySource() {
 		final Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put(ENV_PREFIX + ".ddlFile", ddlFile);
@@ -126,13 +137,7 @@ public class DDLGeneratorMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
-		final AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-		final ConfigurableEnvironment environment = applicationContext.getEnvironment();
-		final MutablePropertySources propertySources = environment.getPropertySources();
-		final MapPropertySource propertySource = createPropertySource();
-		propertySources.addFirst(propertySource);
-		applicationContext.register(SpringConfiguration.class);
-		applicationContext.refresh();
+		final AnnotationConfigApplicationContext applicationContext = createApplicationContext();
 		final DDLGenerator generator = applicationContext.getBean(DDLGenerator.class);
 	}
 
