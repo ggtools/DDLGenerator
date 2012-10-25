@@ -22,12 +22,15 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.dialect.Oracle10gDialect;
+import org.hibernate.dialect.PostgreSQL82Dialect;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
+
+import static org.testng.Assert.assertTrue;
 
 /**
  * User: Christophe Labouisse
@@ -40,17 +43,18 @@ public class DDLGeneratorIntegrationTest {
 
     private static final String SCHEMA = "defaultSchema";
 
-    private static final String[] PERSISTENCE_XML_LOCATIONS = new String[] { "classpath:/META-INF/MyPU.xml" };
+    private static final String[] PERSISTENCE_XML_LOCATIONS = new String[]{"classpath:/META-INF/MyPU.xml"};
 
-    private static final String MY_PU = "MY PU";
+    private static final String MY_PU = "My PU";
 
-    private final File ddlFile = new File("test.sql");
+    private File ddlFile;
 
     private final Log log = new SystemStreamLog();
 
-
     @BeforeMethod
     public void setUp() throws Exception {
+        ddlFile = File.createTempFile("DDLGeneratorIT", ".sql");
+        ddlFile.deleteOnExit();
         mojo.setDdlFile(ddlFile);
         mojo.setDialect(Oracle10gDialect.class.getName());
         mojo.setDefaultSchema(SCHEMA);
@@ -67,8 +71,23 @@ public class DDLGeneratorIntegrationTest {
         DDLGenerator generator = context.getBean(DDLGenerator.class);
     }
 
+    @Test
+    public void executeOracle() throws Exception {
+        mojo.execute();
+        assertTrue(ddlFile.exists());
+    }
+
+    @Test
+    public void executePostgreSQL() throws Exception {
+        mojo.setDialect(PostgreSQL82Dialect.class.getName());
+        mojo.execute();
+        assertTrue(ddlFile.exists());
+    }
+
     @AfterMethod
     public void tearDown() throws Exception {
-
+        if (ddlFile != null) {
+            ddlFile.delete();
+        }
     }
 }

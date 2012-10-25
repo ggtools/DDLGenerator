@@ -124,8 +124,18 @@ public class DDLGeneratorMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
-		final AnnotationConfigApplicationContext applicationContext = createApplicationContext();
-		final DDLGenerator generator = applicationContext.getBean(DDLGenerator.class);
-	}
+		AnnotationConfigApplicationContext applicationContext = null;
+
+        try {
+            applicationContext = createApplicationContext();
+            final DDLGenerator generator = applicationContext.getBean(DDLGenerator.class);
+            getLog().info("Creating schema to " + ddlFile);
+            generator.createSchema();
+        } finally {
+            if (applicationContext != null) {
+                applicationContext.destroy();
+            }
+        }
+    }
 
 }
