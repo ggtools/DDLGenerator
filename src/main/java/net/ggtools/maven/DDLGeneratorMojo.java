@@ -17,24 +17,23 @@
 
 package net.ggtools.maven;
 
-import static net.ggtools.maven.ddlgenerator.SpringConfiguration.ENV_PREFIX;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import net.ggtools.maven.ddlgenerator.DDLGenerator;
 import net.ggtools.maven.ddlgenerator.SpringConfiguration;
-
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import static net.ggtools.maven.ddlgenerator.SpringConfiguration.ENV_PREFIX;
 
 /**
  * Goal which touches a timestamp file. 
@@ -119,6 +118,7 @@ public class DDLGeneratorMojo extends AbstractMojo {
 		properties.put(ENV_PREFIX + ".persistenceUnitName", persistenceUnitName);
 		properties.put(ENV_PREFIX + ".useNewGenerator", useNewGenerator);
 		properties.put(ENV_PREFIX + ".persistenceXmlLocations", persistenceXmlLocations);
+        properties.put(ENV_PREFIX + ".log", getLog());
 		return new MapPropertySource("mojoPropertySource", properties);
 	}
 

@@ -17,17 +17,17 @@
 
 package net.ggtools.maven;
 
-import static net.ggtools.maven.ddlgenerator.SpringConfiguration.ENV_PREFIX;
-import static org.testng.Assert.assertEquals;
-
-import java.io.File;
-
 import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.dialect.Oracle10gDialect;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.env.MapPropertySource;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.io.File;
+
+import static net.ggtools.maven.ddlgenerator.SpringConfiguration.ENV_PREFIX;
+import static org.testng.Assert.assertEquals;
 
 public class DDLGeneratorMojoTest {
 
