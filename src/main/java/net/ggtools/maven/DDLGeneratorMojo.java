@@ -27,6 +27,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
@@ -41,7 +42,10 @@ import static net.ggtools.maven.ddlgenerator.SpringConfiguration.ENV_PREFIX;
 /**
  * Create a SQL file from an JPA/Hibernate project.
  */
-@Mojo(defaultPhase = LifecyclePhase.PREPARE_PACKAGE, name = "generate")
+@Mojo(defaultPhase = LifecyclePhase.PREPARE_PACKAGE,
+        name = "generate",
+        requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME,
+        configurator = "include-project-dependencies")
 @SuppressWarnings("unused")
 @Setter(AccessLevel.PACKAGE)
 @Getter(AccessLevel.PACKAGE)
@@ -113,7 +117,6 @@ public class DDLGeneratorMojo extends AbstractMojo {
         return new MapPropertySource("mojoPropertySource", properties);
     }
 
-    @Override
     public void execute() throws MojoExecutionException {
         AnnotationConfigApplicationContext applicationContext = null;
 
