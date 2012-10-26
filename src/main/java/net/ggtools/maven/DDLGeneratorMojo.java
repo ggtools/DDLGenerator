@@ -39,7 +39,7 @@ import java.util.Map;
 import static net.ggtools.maven.ddlgenerator.SpringConfiguration.ENV_PREFIX;
 
 /**
- * Create a SQL file from an JPA/Hibernat project.
+ * Create a SQL file from an JPA/Hibernate project.
  */
 @Mojo(defaultPhase = LifecyclePhase.PREPARE_PACKAGE, name = "generate")
 @SuppressWarnings("unused")
