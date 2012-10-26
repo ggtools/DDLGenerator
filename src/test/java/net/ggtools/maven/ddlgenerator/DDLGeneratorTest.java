@@ -17,55 +17,58 @@
 
 package net.ggtools.maven.ddlgenerator;
 
-import static org.testng.Assert.assertEquals;
-
-import java.io.File;
-import java.util.Map;
-
 import org.apache.maven.plugin.logging.Log;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.util.Map;
+
+import static org.testng.Assert.assertEquals;
+
 /**
  * User: Christophe Labouisse Date: 10/19/12 Time: 07:53
  */
 public class DDLGeneratorTest extends AbstractTestWithConfig {
-	private DDLGenerator generator;
+    private DDLGenerator generator;
 
-	@Mock
-	private Log log;
+    @Mock
+    private Log log;
 
-	@Test
-	public void initIsOk() throws Exception {
-		generator.setDdlFile(new File("test.sql"));
-		generator.setDialect(dialect);
-		generator.init();
-		final Map<String, Object> configProperties = generator.getConfigProperties();
-		assertEquals(configProperties, referenceConfigProperties);
-	}
+    @Test
+    public void initIsOk() throws Exception {
+        generator.setDdlFile(new File("test.sql"));
+        generator.setDialect(dialect);
+        generator.init();
+        final Map<String, Object> configProperties = generator.getConfigProperties();
+        assertEquals(configProperties, referenceConfigProperties);
+    }
 
-	@Test(expectedExceptions = BeanInitializationException.class)
-	public void initMissingDDLFile() throws Exception {
-		generator.setDialect(dialect);
-		generator.init();
-	}
+    @Test(expectedExceptions = BeanInitializationException.class)
+    public void initMissingDDLFile() throws Exception {
+        generator.setDialect(dialect);
+        generator.init();
+    }
 
-	@Test(expectedExceptions = BeanInitializationException.class)
-	public void initMissingDialect() throws Exception {
-		generator.setDdlFile(new File("test.sql"));
-		generator.init();
-	}
+    @Test(expectedExceptions = BeanInitializationException.class)
+    public void initMissingDialect() throws Exception {
+        generator.setDdlFile(new File("test.sql"));
+        generator.init();
+    }
 
-	@BeforeMethod
-	public void setUp() throws Exception {
-		generator = new DDLGenerator(log);
-	}
+    @BeforeMethod
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        generator = new DDLGenerator();
+        generator.setLog(log);
+    }
 
-	@AfterMethod
-	public void tearDown() throws Exception {
+    @AfterMethod
+    public void tearDown() throws Exception {
 
-	}
+    }
 }

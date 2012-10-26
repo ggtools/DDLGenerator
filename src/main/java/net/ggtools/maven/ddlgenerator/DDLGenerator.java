@@ -41,7 +41,6 @@ import java.util.Map;
 @SuppressWarnings("deprecation")
 @Setter
 public class DDLGenerator {
-    private final Log log;
 
     // Getter for test purpose only.
     @Getter(AccessLevel.PACKAGE)
@@ -55,10 +54,14 @@ public class DDLGenerator {
     private Boolean useNewGenerator;
 
     @Autowired
+    @Setter(AccessLevel.PACKAGE) // For test
+    private Log log;
+
+    @Autowired
     private DefaultPersistenceUnitManager puManager;
 
 
-    public DDLGenerator(final Log log) {
+    public DDLGenerator() {
         this.log = log;
     }
 
@@ -88,10 +91,12 @@ public class DDLGenerator {
     public void init() throws BeanInitializationException {
         // Check mandatory parameters.
         if (dialect == null) {
+            log.error("Parameter 'dialect' is mandatory");
             throw new BeanInitializationException("Parameter 'dialect' is mandatory");
         }
 
         if (ddlFile == null) {
+            log.error("Parameter 'ddlFile' is mandatory");
             throw new BeanInitializationException("Parameter 'ddlFile' is mandatory");
         }
 

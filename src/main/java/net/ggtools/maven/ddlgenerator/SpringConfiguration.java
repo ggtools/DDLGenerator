@@ -17,17 +17,18 @@
 
 package net.ggtools.maven.ddlgenerator;
 
-import java.io.File;
-
-import javax.sql.DataSource;
-
 import org.apache.maven.plugin.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager;
+
+import javax.sql.DataSource;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * User: Christophe Labouisse Date: 10/18/12 Time: 18:12
@@ -35,38 +36,59 @@ import org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager
 @Configuration
 public class SpringConfiguration {
 
-	public final static String ENV_PREFIX = "jpahbn2ddl";
+    public final static String ENV_PREFIX = "jpahbn2ddl";
 
-	@Autowired
-	Environment env;
+    @Autowired
+    private Environment env;
 
-	@Bean
-	public DataSource dataSource() {
-		return new SimpleDriverDataSource();
-	}
+    @Autowired
+    private ApplicationContext context;
 
-	@Bean
-	public DDLGenerator ddlGenerator() {
-		final Log log = env.getProperty(ENV_PREFIX + ".log", Log.class);
-		final DDLGenerator generator = new DDLGenerator(log);
-		generator.setDdlFile(env.getProperty(ENV_PREFIX + ".ddlFile", File.class));
-		generator.setDefaultSchema(env.getProperty(ENV_PREFIX + ".defaultSchema", String.class));
-		generator.setDialect(env.getProperty(ENV_PREFIX + ".dialect", String.class));
-		generator.setNamingStrategy(env.getProperty(ENV_PREFIX + ".namingStrategy", String.class));
-		generator.setPersistenceUnitName(env.getProperty(ENV_PREFIX + ".persistenceUnitName", String.class));
-		generator.setUseNewGenerator(env.getProperty(ENV_PREFIX + ".useNewGenerator", Boolean.class));
-		return generator;
-	}
+    @Bean
+    public DataSource dataSource() {
+        return new SimpleDriverDataSource();
+    }
 
-	@Bean
-	public DefaultPersistenceUnitManager persistenceUnitManager() {
-		MultiConfigAwarePersistenceUnitManager puManager = new MultiConfigAwarePersistenceUnitManager();
-		puManager.setDefaultDataSource(dataSource());
-		puManager.setPersistenceUnitName(env.getProperty(ENV_PREFIX + ".persistenceUnitName", String.class));
-		String[] xmlLocations = env.getProperty(ENV_PREFIX + ".persistenceXmlLocations", String[].class);
-		if (xmlLocations != null) {
-			puManager.setPersistenceXmlLocations(xmlLocations);
-		}
-		return puManager;
-	}
+    @Bean
+    public Log log() {
+        return getLog();
+    }
+
+    private Log getLog() {
+        return env.getProperty(ENV_PREFIX + ".log", Log.class);
+    }
+
+    @Bean
+    public DDLGenerator ddlGenerator() {
+        final DDLGenerator generator = new DDLGenerator();
+        generator.setDdlFile(env.getProperty(ENV_PREFIX + ".ddlFile", File.class));
+        generator.setDefaultSchema(env.getProperty(ENV_PREFIX + ".defaultSchema", String.class));
+        generator.setDialect(env.getProperty(ENV_PREFIX + ".dialect", String.class));
+        generator.setNamingStrategy(env.getProperty(ENV_PREFIX + ".namingStrategy", String.class));
+        generator.setPersistenceUnitName(env.getProperty(ENV_PREFIX + ".persistenceUnitName", String.class));
+        generator.setUseNewGenerator(env.getProperty(ENV_PREFIX + ".useNewGenerator", Boolean.class));
+        return generator;
+    }
+
+    @Bean
+    public DefaultPersistenceUnitManager persistenceUnitManager() {
+        MultiConfigAwarePersistenceUnitManager puManager = new MultiConfigAwarePersistenceUnitManager();
+        puManager.setDefaultDataSource(dataSource());
+        puManager.setPersistenceUnitName(env.getProperty(ENV_PREFIX + ".persistenceUnitName", String.class));
+        String[] xmlLocations = env.getProperty(ENV_PREFIX + ".persistenceXmlLocations", String[].class);
+        if (xmlLocations != null) {
+            if (getLog().isDebugEnabled()) {
+                for (String xmlLocation : xmlLocations) {
+                    getLog().debug("Location    : " + xmlLocation);
+                    try {
+                        getLog().debug("Location URI: " + context.getResource(xmlLocation).getURI());
+                    } catch (IOException e) {
+                        log().error("Cannot get URI for " + xmlLocation, e);
+                    }
+                }
+            }
+            puManager.setPersistenceXmlLocations(xmlLocations);
+        }
+        return puManager;
+    }
 }
