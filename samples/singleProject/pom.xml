@@ -17,7 +17,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.ggtools.maven</groupId>
     <artifactId>ddlgenerator-sample-single</artifactId>
     <packaging>jar</packaging>
     <name>DDL Generator: Single Project Sample</name>
@@ -43,7 +42,7 @@
                             <!--<defaultSchema></defaultSchema>-->
                             <dialect>org.hibernate.dialect.H2Dialect</dialect>
                             <!--<namingStrategy></namingStrategy>-->
-                            <persistenceUnitName>TestPU</persistenceUnitName>
+                            <persistenceUnitName>SinglePU</persistenceUnitName>
                             <persistenceXmlLocations>
                                 <param>classpath*:/META-INF/persistence.xml</param>
                                 <!--<param></param>-->

@@ -18,7 +18,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.ggtools.maven</groupId>
     <artifactId>ddlgenerator-samples-reactor</artifactId>
     <packaging>pom</packaging>
     <name>DDL Generator: Reactor for Samples</name>
@@ -29,5 +28,6 @@
     </parent>
     <modules>
         <module>singleProject</module>
+        <module>multiProject</module>
     </modules>
 </project>
