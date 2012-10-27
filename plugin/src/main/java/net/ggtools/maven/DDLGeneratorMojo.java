@@ -82,7 +82,8 @@ public class DDLGeneratorMojo extends AbstractMojo {
     private String persistenceUnitName;
 
     /**
-     * Locations of the persistence.xml files.
+     * Locations of the persistence.xml files. As the plugin is not running in the application classpath,
+     * classpath URI should use <code>classpath*:</code> rather than <code>classpath:</code>
      */
     @Parameter(required = false)
     private String[] persistenceXmlLocations;
