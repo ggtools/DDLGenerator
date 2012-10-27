@@ -14,75 +14,20 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with ddlGenerator.  If not, see <http://www.gnu.org/licenses/>.
   -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.ggtools.maven</groupId>
-    <artifactId>ddlgenerator-sample</artifactId>
-    <packaging>jar</packaging>
-    <version>0.1-SNAPSHOT</version>
-    <dependencies>
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.1.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.peichhorn</groupId>
-            <artifactId>lombok-pg</artifactId>
-            <version>0.11.3</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.2</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.0.7</version>
-            <scope>runtime</scope>
-        </dependency>
-    </dependencies>
-    <name>Sample plugin to test DDL Generation</name>
-    <url>http://maven.apache.org</url>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <target>1.6</target>
-                    <source>1.6</source>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>net.ggtools.maven</groupId>
-                <artifactId>ddlgenerator-maven-plugin</artifactId>
-                <version>0.1-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>prepare-package</phase>
-                        <configuration>
-                            <ddlFile>${project.build.directory}/sql/schema.sql</ddlFile>
-                            <!--<defaultSchema></defaultSchema>-->
-                            <dialect>org.hibernate.dialect.H2Dialect</dialect>
-                            <!--<namingStrategy></namingStrategy>-->
-                            <persistenceUnitName>TestPU</persistenceUnitName>
-                            <persistenceXmlLocations>
-                                <param>classpath*:/META-INF/persistence.xml</param>
-                                <!--<param></param>-->
-                            </persistenceXmlLocations>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-
-    </build>
+    <artifactId>ddlgenerator-samples-reactor</artifactId>
+    <packaging>pom</packaging>
+    <name>DDL Generator: Reactor for Samples</name>
+    <parent>
+        <groupId>net.ggtools.maven</groupId>
+        <artifactId>ddlgenerator-reactor</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+    <modules>
+        <module>singleProject</module>
+    </modules>
 </project>
