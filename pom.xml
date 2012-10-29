@@ -22,6 +22,11 @@
     <artifactId>ddlgenerator-reactor</artifactId>
     <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <name>DDL Generator: Reactor</name>
     <description>A maven plugin to generate DDL file from a JPA+Hibernate project.</description>
     <url>http://ggtools.github.com/DDLGenerator</url>
