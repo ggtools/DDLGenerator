@@ -23,6 +23,27 @@
     <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
     <name>DDL Generator: Reactor</name>
+    <description>A maven plugin to generate DDL file from a JPA+Hibernate project.</description>
+    <url>http://ggtools.github.com/DDLGenerator</url>
+    <licenses>
+        <license>
+            <name>The GNU Public License v3</name>
+            <url>http://www.gnu.org/licenses/gpl.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/ggtools/DDLGenerator.git</url>
+        <developerConnection>git@github.com:ggtools/DDLGenerator.git</developerConnection>
+        <connection>git://github.com/ggtools/DDLGenerator.git</connection>
+    </scm>
+    <developers>
+        <developer>
+            <id>ggtools</id>
+            <name>Christophe Labouisse</name>
+            <email>christophe@labouisse.org</email>
+        </developer>
+    </developers>
     <modules>
         <module>plugin</module>
         <module>samples</module>
