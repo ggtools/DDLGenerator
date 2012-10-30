@@ -39,8 +39,8 @@
     </licenses>
     <scm>
         <url>https://github.com/ggtools/DDLGenerator.git</url>
-        <developerConnection>git@github.com:ggtools/DDLGenerator.git</developerConnection>
-        <connection>git://github.com/ggtools/DDLGenerator.git</connection>
+        <developerConnection>scm:git:git@github.com:ggtools/DDLGenerator.git</developerConnection>
+        <connection>scm:git://github.com/ggtools/DDLGenerator.git</connection>
     </scm>
     <developers>
         <developer>
