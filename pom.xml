@@ -20,7 +20,7 @@
     <groupId>net.ggtools.maven</groupId>
     <artifactId>ddlgenerator-reactor</artifactId>
     <packaging>pom</packaging>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>

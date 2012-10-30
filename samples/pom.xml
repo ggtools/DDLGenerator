@@ -23,7 +23,7 @@
     <parent>
         <groupId>net.ggtools.maven</groupId>
         <artifactId>ddlgenerator-reactor</artifactId>
-        <version>0.1</version>
+        <version>0.2-SNAPSHOT</version>
     </parent>
     <modules>
         <module>singleProject</module>

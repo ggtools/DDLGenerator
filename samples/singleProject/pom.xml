@@ -22,14 +22,14 @@
     <parent>
         <groupId>net.ggtools.maven</groupId>
         <artifactId>ddlgenerator-samples-reactor</artifactId>
-        <version>0.1</version>
+        <version>0.2-SNAPSHOT</version>
     </parent>
     <build>
         <plugins>
             <plugin>
                 <groupId>net.ggtools.maven</groupId>
                 <artifactId>ddlgenerator-maven-plugin</artifactId>
-                <version>0.1</version>
+                <version>0.2-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <goals>
