@@ -12,10 +12,9 @@
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with ddlGenerator.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with ddlGenerator.  If not, see <http://www.gnu.org/licenses />.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ddlgenerator-sample-single</artifactId>
     <packaging>jar</packaging>
@@ -23,14 +22,14 @@
     <parent>
         <groupId>net.ggtools.maven</groupId>
         <artifactId>ddlgenerator-samples-reactor</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.2-SNAPSHOT</version>
     </parent>
     <build>
         <plugins>
             <plugin>
                 <groupId>net.ggtools.maven</groupId>
                 <artifactId>ddlgenerator-maven-plugin</artifactId>
-                <version>0.1-SNAPSHOT</version>
+                <version>0.2-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <goals>
