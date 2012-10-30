@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ddlgenerator-samples-multi-reactor</artifactId>
+        <groupId>net.ggtools.maven</groupId>
+        <version>0.2-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ddlgenerator-sample-multi-app</artifactId>
+    <packaging>jar</packaging>
+    <name>DDL Generator: Multi Project Sample Application</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.ggtools.maven</groupId>
+                <artifactId>ddlgenerator-maven-plugin</artifactId>
+                <version>0.2-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <ddlFile>${project.build.directory}/sql/schema.sql</ddlFile>
+                            <!--<defaultSchema></defaultSchema>-->
+                            <dialect>org.hibernate.dialect.H2Dialect</dialect>
+                            <!--<namingStrategy></namingStrategy>-->
+                            <persistenceUnitName>MultiPU</persistenceUnitName>
+                            <persistenceXmlLocations>
+                                <param>classpath*:/META-INF/persistence.xml</param>
+                                <param>classpath*:/META-INF/persistence-*.xml</param>
+                            </persistenceXmlLocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>net.ggtools.maven</groupId>
+            <artifactId>ddlgenerator-samples-multi-domain</artifactId>
+            <version>0.2-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>

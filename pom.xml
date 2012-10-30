@@ -1,0 +1,116 @@
+<!--
+  ~ This file is part of ddlGenerator. Copyright ©2012 Christophe Labouisse
+  ~
+  ~ ddlGenerator is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ddlGenerator is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ddlGenerator.  If not, see <http://www.gnu.org/licenses />.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.ggtools.maven</groupId>
+    <artifactId>ddlgenerator-reactor</artifactId>
+    <packaging>pom</packaging>
+    <version>0.2-SNAPSHOT</version>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+    <name>DDL Generator: Reactor</name>
+    <description>A maven plugin to generate DDL file from a JPA+Hibernate project.</description>
+    <url>http://ggtools.github.com/DDLGenerator</url>
+    <licenses>
+        <license>
+            <name>The GNU Public License v3</name>
+            <url>http://www.gnu.org/licenses/gpl.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/ggtools/DDLGenerator.git</url>
+        <developerConnection>scm:git:git@github.com:ggtools/DDLGenerator.git</developerConnection>
+        <connection>scm:git://github.com/ggtools/DDLGenerator.git</connection>
+    </scm>
+    <developers>
+        <developer>
+            <id>ggtools</id>
+            <name>Christophe Labouisse</name>
+            <email>christophe@labouisse.org</email>
+        </developer>
+    </developers>
+    <modules>
+        <module>plugin</module>
+        <module>samples</module>
+    </modules>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.github.peichhorn</groupId>
+            <artifactId>lombok-pg</artifactId>
+            <version>0.11.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>1.0.1.Final</version>
+        </dependency>
+    </dependencies>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>3.1.2.RELEASE</spring.version>
+        <hibernate.version>4.1.4.Final</hibernate.version>
+        <slf4j.version>1.7.2</slf4j.version>
+    </properties>
+</project>

@@ -1,0 +1,68 @@
+<!--
+  ~ This file is part of ddlGenerator. Copyright ©2012 Christophe Labouisse
+  ~
+  ~ ddlGenerator is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ddlGenerator is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ddlGenerator.  If not, see <http://www.gnu.org/licenses />.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ddlgenerator-sample-single</artifactId>
+    <packaging>jar</packaging>
+    <name>DDL Generator: Single Project Sample</name>
+    <parent>
+        <groupId>net.ggtools.maven</groupId>
+        <artifactId>ddlgenerator-samples-reactor</artifactId>
+        <version>0.2-SNAPSHOT</version>
+    </parent>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.ggtools.maven</groupId>
+                <artifactId>ddlgenerator-maven-plugin</artifactId>
+                <version>0.2-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <ddlFile>${project.build.directory}/sql/schema.sql</ddlFile>
+                            <!--<defaultSchema></defaultSchema>-->
+                            <dialect>org.hibernate.dialect.H2Dialect</dialect>
+                            <!--<namingStrategy></namingStrategy>-->
+                            <persistenceUnitName>SinglePU</persistenceUnitName>
+                            <persistenceXmlLocations>
+                                <param>classpath*:/META-INF/persistence.xml</param>
+                                <!--<param></param>-->
+                            </persistenceXmlLocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.7</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+</project>
