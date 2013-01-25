@@ -61,10 +61,6 @@ public class DDLGenerator {
     private DefaultPersistenceUnitManager puManager;
 
 
-    public DDLGenerator() {
-        this.log = log;
-    }
-
     private void createDirectoriesIfNeeded() {
         ddlFile.getParentFile().mkdirs();
     }
