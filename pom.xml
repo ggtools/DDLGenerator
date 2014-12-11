@@ -96,10 +96,9 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.github.peichhorn</groupId>
-            <artifactId>lombok-pg</artifactId>
-            <version>0.11.3</version>
-            <scope>provided</scope>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.14.8</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
